@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#031c42">
+<title>Galería RAV | Ríos de Agua Viva</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#02152f;--blue:#063f92;--sky:#168ee8;--yellow:#ffbd20;--bg:#f4f7fb;--text:#17323e;--muted:#687d87}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+header{position:sticky;top:0;z-index:100;background:rgba(2,21,47,.96);border-bottom:1px solid rgba(255,255,255,.12)}
+.nav{max-width:1250px;margin:auto;min-height:76px;padding:10px 170px 10px 20px;display:flex;align-items:center;gap:24px}
+.brand{display:flex;align-items:center;gap:12px;color:white;text-decoration:none;font-weight:900;margin-right:auto}
+.brand img{width:62px;height:52px;object-fit:contain}
+.brand small{display:block;font-size:.62rem;letter-spacing:2px;opacity:.72;margin-top:3px}
+.nav-link,.dropbtn{color:white;background:none;border:0;text-decoration:none;font-weight:900;font-size:.86rem;cursor:pointer;padding:12px}
+.dropdown{position:relative}
+.menu{display:none;position:absolute;right:0;top:100%;width:280px;background:white;border-radius:14px;padding:8px;box-shadow:0 18px 45px rgba(0,0,0,.25)}
+.dropdown:hover .menu,.dropdown:focus-within .menu{display:block}
+.menu a{display:block;padding:12px;border-radius:9px;text-decoration:none;color:var(--text);font-weight:800}
+.menu a:hover{background:#edf6ff;color:var(--blue)}
+.back{background:var(--sky);color:white;text-decoration:none;font-weight:900;padding:13px 18px;border-radius:12px;white-space:nowrap}
+.hero{min-height:440px;display:grid;place-items:center;text-align:center;color:white;padding:80px 20px;background:
+linear-gradient(rgba(2,21,47,.45),rgba(2,21,47,.86)),
+radial-gradient(circle at 50% 15%,#1675bd 0,#063f92 35%,#02152f 78%)}
+.hero-logo{width:min(180px,45vw);margin-bottom:18px;filter:drop-shadow(0 10px 20px rgba(0,0,0,.4))}
+.hero h1{font-size:clamp(2.3rem,6vw,4.6rem);letter-spacing:2px}
+.hero .script{font-size:clamp(1.2rem,3vw,2rem);font-style:italic;margin-top:8px;color:#eaf4ff}
+.hero .church{font-weight:800;letter-spacing:2px;margin-top:18px;font-size:.78rem}
+.hero .verse{margin-top:24px;font-size:1rem;opacity:.92}
+.content{max-width:1250px;margin:auto;padding:55px 20px 80px}
+.heading{text-align:center;margin-bottom:32px}
+.heading span{display:block;color:var(--navy);font-size:clamp(2.3rem,5vw,4rem);font-weight:900;letter-spacing:2px;line-height:1.05}
+.heading h2{font-size:clamp(2rem,4vw,3rem);color:var(--navy);margin-top:7px}
+.heading p{color:var(--muted);margin:10px auto 0;max-width:650px;line-height:1.6}
+.album-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:30px}
+.album-card{background:white;border-radius:18px;overflow:hidden;box-shadow:0 8px 25px rgba(0,0,0,.1);cursor:pointer}
+.album-card img{width:100%;aspect-ratio:16/10;object-fit:cover}
+.album-info{padding:16px}.album-info h3{color:var(--navy)}.album-info p{color:var(--muted);margin-top:6px;font-size:.9rem}
+.album-view{display:none}.album-view.active{display:block}
+.album-header{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;margin-bottom:24px}
+.album-header h2{color:var(--navy);font-size:clamp(1.8rem,4vw,2.8rem)}
+.album-header p{color:var(--muted);margin-top:7px}
+.album-back{border:0;background:var(--sky);color:#fff;font-weight:900;border-radius:11px;padding:12px 16px;cursor:pointer}
+.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.photo-grid img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:13px;cursor:pointer;box-shadow:0 5px 16px rgba(0,0,0,.1)}
+.lightbox{display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.92);align-items:center;justify-content:center;padding:25px}
+.lightbox.open{display:flex}.lightbox img{max-width:94vw;max-height:90vh;object-fit:contain}
+.lightbox-close{position:absolute;right:22px;top:18px;border:0;background:none;color:#fff;font-size:2.4rem;cursor:pointer}
+footer{background:var(--navy);color:white;text-align:center;padding:34px 20px}
+footer strong{display:block;font-size:1.05rem}footer p{opacity:.7;margin-top:7px;font-size:.85rem}
+.lang-switch{display:flex;gap:4px;position:fixed;top:14px;right:18px;z-index:1000;background:rgba(255,255,255,.14);padding:4px;border-radius:10px;flex:0 0 auto}
+.lang-btn{border:0;border-radius:7px;padding:7px 10px;font-weight:900;cursor:pointer;background:transparent;color:#fff}
+.lang-btn.active{background:#fff;color:#063f92}
+@media(max-width:760px){
+.nav{min-height:68px;gap:5px;padding:8px 112px 8px 10px}.brand img{width:48px}.brand span{display:none}
+.nav-link,.dropbtn{font-size:.72rem;padding:9px 7px}.back{font-size:.68rem;padding:10px 9px}.lang-switch{top:12px;right:10px;padding:3px}.lang-btn{font-size:.76rem;padding:6px 8px}
+.menu{position:fixed;left:10px;right:10px;top:68px;width:auto}
+.hero{min-height:390px;padding:60px 15px}.album-grid,.photo-grid{grid-template-columns:1fr}.album-header{display:block}.album-back{margin-top:14px}
+}
+
+.album-card img{
+ width:220px!important;height:220px!important;object-fit:contain!important;
+ object-position:center!important;display:block!important;margin:14px auto 4px!important;
+ padding:0!important;border-radius:50%!important;background:#fff!important;box-sizing:border-box!important;
+}
+@media(max-width:700px){.album-card img{width:190px!important;height:190px!important;}}
+
+/* RAV Gallery hero using the official church background */
+.hero{
+  background:
+    linear-gradient(rgba(0,28,65,.66), rgba(0,24,55,.78)),
+    url('ravchurch.png') center center / cover no-repeat !important;
+  background-position:center center !important;
+}
+@media (max-width:700px){
+  .hero{
+    background:
+      linear-gradient(rgba(0,28,65,.70), rgba(0,24,55,.82)),
+      url('ravchurch.png') 30% center / cover no-repeat !important;
+  }
+}
+
+
+/* Larger Acts 2:38 text in hero */
+.hero .verse{
+  font-size:20px !important;
+  line-height:1.45 !important;
+}
+.hero .verse strong{
+  font-size:22px !important;
+  line-height:1.3 !important;
+}
+@media (max-width:700px){
+  .hero .verse{font-size:16px !important;line-height:1.4 !important;}
+  .hero .verse strong{font-size:18px !important;}
+}
+
+</style>
+</head>
+<body>
+<header>
+<nav class="nav">
+<a class="brand" href="#inicio"><img src="ravofficial.png" alt="Ríos de Agua Viva"><span>RÍOS DE AGUA VIVA<small>IGLESIA APOSTÓLICA</small></span></a>
+<a class="nav-link" href="#inicio" data-i18n="home">INICIO</a>
+<div class="dropdown"><button class="dropbtn" type="button"><span data-i18n="events">EVENTOS</span> ▾</button><div class="menu"><a href="#eventos" onclick="openAlbum('anniversary');return false;" data-i18n="anniversary">25° Aniversario Pastoral — Edificando un Legado</a><a href="#eventos" onclick="openAlbum('services');return false;" data-i18n="services">Servicios</a><a href="#eventos" onclick="openAlbum('baptisms');return false;" data-i18n="baptisms">Bautismos</a><a href="#eventos" onclick="openAlbum('praise');return false;" data-i18n="praise">Praise Team</a><a href="#eventos" onclick="openAlbum('children');return false;" data-i18n="children">Ministerio Infantil</a><a href="#eventos" onclick="openAlbum('vbs');return false;" data-i18n="vbs">Escuela Bíblica de Vacaciones (VBS)</a></div></div>
+<div class="lang-switch" aria-label="Seleccionar idioma / Select language"><button class="lang-btn active" id="langEs" type="button" onclick="setLanguage('es')">ES</button><button class="lang-btn" id="langEn" type="button" onclick="setLanguage('en')">EN</button></div>
+<a class="back" href="https://www.riosdeaguavivaks.com/"><span aria-hidden="true">⌂</span> <span data-i18n="back">REGRESAR A PÁGINA DE INICIO</span></a>
+</nav>
+</header>
+<main id="inicio">
+<section class="hero"><div><img class="hero-logo" src="ravofficial.png" alt="Logo RAV"><h1 data-i18n="galleryTitle">GALERÍA DE FOTOGRAFÍAS</h1><div class="script" data-i18n="moments">Momentos que vivimos juntos</div><div class="church" data-i18n="church">IGLESIA APOSTÓLICA RÍOS DE AGUA VIVA</div><div class="verse" data-i18n="verse">“Pedro les dijo: Arrepentíos, y bautícese cada uno de vosotros en el nombre de Jesucristo para perdón de los pecados; y recibiréis el don del Espíritu Santo.”<br><strong>HECHOS 2:38</strong></div></div></section>
+<section class="content" id="eventos">
+<div id="albumList"><div class="heading"><span data-i18n="memories">NUESTROS RECUERDOS</span><p data-i18n="intro">Aquí encontrarás las fotografías de nuestros servicios, celebraciones y actividades.</p></div>
+<div class="album-grid">
+<article class="album-card" onclick="openAlbum('anniversary')"><img src="eventos/25-aniversario-pastoral/portada.png" alt="25 Aniversario Pastoral"><div class="album-info"><h3 data-i18n="anniversaryTitle">25° Aniversario Pastoral</h3><p data-i18n="legacy">Edificando un Legado</p><p>10 fotografías</p></div></article>
+<article class="album-card" onclick="openAlbum('services')"><img src="eventos/servicios/portada.jpg" alt="Servicios"><div class="album-info"><h3 data-i18n="services">Servicios</h3><p data-i18n="servicesSubtitle">Momentos de nuestros servicios</p><p>16 fotografías</p></div></article>
+<article class="album-card" onclick="openAlbum('baptisms')"><img src="eventos/bautismos/portada.jpg" alt="Bautismos"><div class="album-info"><h3 data-i18n="baptisms">Bautismos</h3><p data-i18n="baptismsSubtitle">Vidas transformadas en el nombre de Jesucristo</p><p>69 fotografías</p></div></article>
+<article class="album-card" onclick="openAlbum('praise')"><img src="eventos/Praise team/portada.png" alt="Praise Team"><div class="album-info"><h3 data-i18n="praise">Praise Team</h3><p data-i18n="praiseSubtitle">Adorando juntos</p><p>34 fotografías</p></div></article>
+<article class="album-card" onclick="openAlbum('children')"><img src="eventos/Ministerio Infantil/portada.png" alt="Ministerio Infantil"><div class="album-info"><h3 data-i18n="children">Ministerio Infantil</h3><p data-i18n="childrenSubtitle">Formando una nueva generación</p><p>23 fotografías</p></div></article>
+<article class="album-card" onclick="openAlbum('vbs')"><img src="eventos/escuela-biblica-de-vacaciones-vbs/portada.png" alt="Escuela Bíblica de Vacaciones (VBS)"><div class="album-info"><h3 data-i18n="vbs">Escuela Bíblica de Vacaciones (VBS)</h3><p data-i18n="vbsSubtitle">Aprendiendo y creciendo en Jesús</p><p data-i18n="unlimitedPhotos">Fotografías</p></div></article>
+</div></div>
+<div class="album-view" id="albumView"><div class="album-header"><div><h2 id="albumTitle">25° Aniversario Pastoral</h2><p id="albumSubtitle">Edificando un Legado</p></div><button class="album-back" onclick="closeAlbum()" data-i18n="backEvents">← REGRESAR A EVENTOS</button></div><div class="photo-grid" id="photoGrid"></div></div>
+</section>
+</main>
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)"><button class="lightbox-close" onclick="closeLightbox(event)">×</button><img id="lightboxImage" alt="Fotografía ampliada"></div>
+<footer><strong>RÍOS DE AGUA VIVA</strong><p data-i18n="footerMotto">Existimos para Adorar, Crecer, Convivir, Atraer y Equipar.</p></footer>
+<script>
+const translations={es:{home:"INICIO",events:"EVENTOS",back:"REGRESAR A PÁGINA DE INICIO",galleryTitle:"GALERÍA DE FOTOGRAFÍAS",moments:"Momentos que vivimos juntos",church:"IGLESIA APOSTÓLICA RÍOS DE AGUA VIVA",verse:"“Pedro les dijo: Arrepentíos, y bautícese cada uno de vosotros en el nombre de Jesucristo para perdón de los pecados; y recibiréis el don del Espíritu Santo.”<br><strong>HECHOS 2:38</strong>",memories:"NUESTROS RECUERDOS",ravEvents:"Eventos RAV",intro:"Aquí encontrarás las fotografías de nuestros servicios, celebraciones y actividades.",anniversary:"25° Aniversario Pastoral — Edificando un Legado",anniversaryTitle:"25° Aniversario Pastoral",legacy:"Edificando un Legado",services:"Servicios",servicesSubtitle:"Momentos de nuestros servicios",baptisms:"Bautismos",baptismsSubtitle:"Vidas transformadas en el nombre de Jesucristo",praise:"Praise Team",praiseSubtitle:"Adorando juntos",children:"Ministerio Infantil",childrenSubtitle:"Formando una nueva generación",vbs:"Escuela Bíblica de Vacaciones (VBS)",vbsSubtitle:"Aprendiendo y creciendo en Jesús",unlimitedPhotos:"Fotografías",tenPhotos:"10 fotografías",backEvents:"← REGRESAR A EVENTOS",footerMotto:"Existimos para Adorar, Crecer, Convivir, Atraer y Equipar."},en:{home:"HOME",events:"EVENTS",back:"BACK TO HOME PAGE",galleryTitle:"PHOTO GALLERY",moments:"Moments we have shared together",church:"RÍOS DE AGUA VIVA APOSTOLIC CHURCH",verse:"“Then Peter said unto them, Repent, and be baptized every one of you in the name of Jesus Christ for the remission of sins, and ye shall receive the gift of the Holy Ghost.”<br><strong>ACTS 2:38</strong>",memories:"OUR MEMORIES",ravEvents:"RAV Events",intro:"Here you will find photographs from our services, celebrations, and activities.",anniversary:"25th Pastoral Anniversary — Building a Legacy",anniversaryTitle:"25th Pastoral Anniversary",legacy:"Building a Legacy",services:"Services",servicesSubtitle:"Moments from our worship services",baptisms:"Baptisms",baptismsSubtitle:"Lives transformed in the name of Jesus Christ",praise:"Praise Team",praiseSubtitle:"Worshiping together",children:"Children’s Ministry",childrenSubtitle:"Raising a new generation",vbs:"Vacation Bible School (VBS)",vbsSubtitle:"Learning and growing in Jesus",unlimitedPhotos:"Photographs",tenPhotos:"10 photographs",backEvents:"← BACK TO EVENTS",footerMotto:"We exist to Worship, Grow, Fellowship, Reach and Equip."}};
+const albums={
+anniversary:{basePath:"eventos/25-aniversario-pastoral/",titleEs:"25° Aniversario Pastoral",titleEn:"25th Pastoral Anniversary",subEs:"Edificando un Legado",subEn:"Building a Legacy",photos:["25 aniversario 1.jpeg","25 aniversario 2.jpeg","25 aniversario 3.jpeg","25 aniversario4.jpeg","25 aniversario 5.jpeg","25 aniversario 6.jpeg","25 aniversario 7.jpeg","25 aniversario 8.jpeg","25 aniversario 9.jpeg","25 aniversario 10.jpeg"]},
+services:{basePath:"eventos/servicios/",titleEs:"Servicios",titleEn:"Services",subEs:"Momentos de nuestros servicios",subEn:"Moments from our worship services",photos:["Servicio1.jpg","Servicio2.jpg","Servicio3.jpg","Servicio4.jpg","Servicio5.jpg","Servicio6.jpg","Servicio7.jpg","Servicio8.jpg","Servicio9.jpg","Servicio10.jpg","Servicio11.jpg","Servicio12.jpg","Servicio13.jpg","Servicio14.jpg","Servicio15.jpg","Servicio16.jpg"]},
+baptisms:{basePath:"eventos/bautismos/",titleEs:"Bautismos",titleEn:"Baptisms",subEs:"Vidas transformadas en el nombre de Jesucristo",subEn:"Lives transformed in the name of Jesus Christ",photos:["Bautismos 1.jpg","Bautismos 2.jpg","Bautismos 3.jpg","Bautismos 4.jpg","Bautismos 5.jpg","Bautismos 6.jpg","Bautismos 7.jpg","Bautismos 8.jpg","Bautismos 9.jpg","Bautismos 10.jpg","Bautismos 11.jpg","Bautismos 12.jpg","Bautismos 13.jpg","Bautismos 14.jpg","Bautismos 15.jpg","Bautismos 16.jpg","Bautismos 17.jpg","Bautismos 18.jpg","Bautismos 19.jpg","Bautismos 20.jpg","Bautismos 21.jpg","Bautismos 22.jpg","Bautismos 23.jpg","Bautismos 24.jpg","Bautismos 25.jpg","Bautismos 26.jpg","Bautismos 27.jpg","Bautismos 28.jpg","Bautismos 29.jpg","Bautismos 30.jpg","Bautismos 31.jpg","Bautismos 32.jpg","Bautismos 33.jpg","Bautismos 34.jpg","Bautismos 35.jpg","Bautismos 36.jpg","Bautismos 37.jpg","Bautismos 38.jpg","Bautismos 39.jpg","Bautismos 40.jpg","Bautismos 41.jpg","Bautismos 42.jpg","Bautismos 43.jpg","Bautismos 44.jpg","Bautismos 45.jpg","Bautismos 46.jpg","Bautismos 47.jpg","Bautismos 48.jpg","Bautismos 49.jpg","Bautismos 50.jpg","Bautismos 51.jpg","Bautismos 52.jpg","Bautismos 53.jpg","Bautismos 54.jpg","Bautismos 55.jpg","Bautismos 56.jpg","Bautismos 57.jpg","Bautismos 58.jpg","Bautismos 59.jpg","Bautismos 60.jpg","Bautismos 61.jpg","Bautismos 62.jpg","Bautismos 63.jpg","Bautismos 64.jpg","Bautismos 65.jpg","Bautismos 66.jpg","Bautismos 67.jpg","Bautismos 68.jpg","Bautismos 69.jpg"]},
+praise:{basePath:"eventos/Praise team/",titleEs:"Praise Team",titleEn:"Praise Team",subEs:"Adorando juntos",subEn:"Worshiping together",photos:["Praise team 1.jpg","Praise team 2.jpg","Praise team 3.jpg","Praise team 4.jpg","Praise team 5.jpg","Praise team 6.jpg","Praise team 7.jpg","Praise team 8.jpg","Praise team 9.jpg","Praise team 10.jpg","Praise team 11.jpg","Praise team 12.jpg","Praise team 13.jpg","Praise team 14.jpg","Praise team 15.jpg","Praise team 16.jpg","Praise team 17.jpg","Praise team 18.jpg","Praise team 19.jpg","Praise team 20.jpg","Praise team 21.jpg","Praise team 22.jpg","Praise team 23.jpg","Praise team 24.jpg","Praise team 25.jpg","Praise team 26.jpg","Praise team 27.jpg","Praise team 28.jpg","Praise team 29.jpg","Praise team 30.jpg","Praise team 31.jpg","Praise team 32.jpg","Praise team 33.jpg","Praise team 34.jpg"]},
+children:{basePath:"eventos/Ministerio Infantil/",titleEs:"Ministerio Infantil",titleEn:"Children’s Ministry",subEs:"Formando una nueva generación",subEn:"Raising a new generation",photos:["Ministerio Infantil 1.jpg","Ministerio Infantil 2.jpg","Ministerio Infantil 3.jpg","Ministerio Infantil 4.jpg","Ministerio Infantil 5.jpg","Ministerio Infantil 6.jpg","Ministerio Infantil 7.jpg","Ministerio Infantil 8.jpg","Ministerio Infantil 9.jpg","Ministerio Infantil 10.jpg","Ministerio Infantil 11.jpg","Ministerio Infantil 12.jpg","Ministerio Infantil 13.jpg","Ministerio Infantil 14.jpg","Ministerio Infantil 15.jpg","Ministerio Infantil 16.jpg","Ministerio Infantil 17.jpg","Ministerio Infantil 18.jpg","Ministerio Infantil 19.jpg","Ministerio Infantil 20.jpg","Ministerio Infantil 21.jpg","Ministerio Infantil 22.jpg","Ministerio Infantil 23.jpg"]},
+vbs:{basePath:"eventos/escuela-biblica-de-vacaciones-vbs/",titleEs:"Escuela Bíblica de Vacaciones (VBS)",titleEn:"Vacation Bible School (VBS)",subEs:"Aprendiendo y creciendo en Jesús",subEn:"Learning and growing in Jesus",photos:[]}
+};
+let currentAlbum="anniversary";
+async function getAlbumPhotos(key){
+  const a=albums[key];
+  try{
+    const r=await fetch(a.basePath+"fotos.json",{cache:"no-store"});
+    if(!r.ok)throw new Error("No manifest");
+    const data=await r.json();
+    const list=Array.isArray(data)?data:data.fotos;
+    if(!Array.isArray(list))throw new Error("Invalid manifest");
+    return list.filter(n=>n && !/^portada\.(jpg|jpeg|png|webp)$/i.test(n));
+  }catch(e){return a.photos}
+}
+async function buildPhotos(key){
+  const a=albums[key],g=document.getElementById("photoGrid");g.innerHTML="";
+  const photos=await getAlbumPhotos(key);
+  photos.forEach((n,i)=>{const im=document.createElement("img");im.src=a.basePath+n;im.alt=(document.documentElement.lang==="en"?a.titleEn:a.titleEs)+" - Foto "+(i+1);im.loading="lazy";im.onclick=()=>openLightbox(im.src);g.appendChild(im)});
+}
+function openAlbum(key="anniversary"){
+  currentAlbum=key;const a=albums[key],en=document.documentElement.lang==="en";
+  document.getElementById("albumTitle").textContent=en?a.titleEn:a.titleEs;
+  document.getElementById("albumSubtitle").textContent=en?a.subEn:a.subEs;
+  document.getElementById("albumList").style.display="none";document.getElementById("albumView").classList.add("active");buildPhotos(key);document.getElementById("eventos").scrollIntoView({behavior:"smooth"})
+}
+function closeAlbum(){document.getElementById("albumView").classList.remove("active");document.getElementById("albumList").style.display="";document.getElementById("eventos").scrollIntoView({behavior:"smooth"})}
+function openLightbox(src){document.getElementById("lightboxImage").src=src;document.getElementById("lightbox").classList.add("open");document.body.style.overflow="hidden"}
+function closeLightbox(e){if(e)e.stopPropagation();document.getElementById("lightbox").classList.remove("open");document.body.style.overflow=""}
+function setLanguage(lang){if(!translations[lang])lang="es";document.documentElement.lang=lang;document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.dataset.i18n;if(translations[lang][k]!==undefined)el.innerHTML=translations[lang][k]});document.getElementById("langEs").classList.toggle("active",lang==="es");document.getElementById("langEn").classList.toggle("active",lang==="en");try{localStorage.setItem("ravGalleryLanguage",lang)}catch(e){}}
+(function(){const p=new URLSearchParams(window.location.search),passed=p.get("lang");let saved=null;try{saved=localStorage.getItem("ravGalleryLanguage")}catch(e){}setLanguage(passed==="en"||passed==="es"?passed:(saved||"es"))})();
+</script>
+</body></html>
