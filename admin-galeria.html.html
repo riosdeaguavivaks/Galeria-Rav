@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#031c42">
+<title>Administrador Galería RAV</title>
+<style>
+*{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f3f7fb;color:#17323e}
+header{background:#02152f;color:#fff;position:sticky;top:0;z-index:5;box-shadow:0 3px 16px #0003}
+.top{max-width:1250px;margin:auto;padding:12px 18px;display:flex;align-items:center;gap:12px}
+.logo{width:52px;height:52px;object-fit:contain} .title{flex:1} .title strong{display:block;font-size:1.15rem} .title small{opacity:.72}
+.lang{display:flex;background:#ffffff1c;border-radius:10px;padding:4px;gap:3px}
+.lang button{border:0;border-radius:7px;padding:8px 11px;font-weight:900;background:transparent;color:#fff;cursor:pointer}
+.lang button.active{background:#fff;color:#063f92}
+main{max-width:1250px;margin:auto;padding:28px 18px 70px}
+.hero{background:linear-gradient(135deg,#063f92,#02152f);color:#fff;padding:24px;border-radius:18px;display:flex;gap:18px;align-items:center;justify-content:space-between}
+.hero h1{margin:0 0 6px;font-size:clamp(1.5rem,4vw,2.5rem)} .hero p{margin:0;opacity:.85}
+.create{border:0;background:#ffbd20;color:#17202a;font-weight:900;padding:14px 18px;border-radius:12px;cursor:pointer;white-space:nowrap}
+.notice{margin:18px 0;padding:12px 14px;background:#e8f4ff;border-left:5px solid #168ee8;border-radius:8px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.album-card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 7px 22px #00000016}
+.album-card>img{width:100%;height:180px;object-fit:contain;background:#fff;display:block}
+.album-body{padding:14px} h3{margin:0;color:#02152f} .album-body p{margin:6px 0;color:#687d87;min-height:36px} small{color:#687d87;font-weight:700}
+.actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:13px}
+button{font:inherit} .actions button,.modal button{border:0;border-radius:9px;padding:9px 10px;font-weight:900;cursor:pointer;background:#e9eef4;color:#17323e}
+.actions .primary,.modal .primary{background:#168ee8;color:#fff} .actions .danger,.modal .danger{background:#b42318;color:#fff}
+.modal-wrap{display:none;position:fixed;inset:0;background:#0009;z-index:20;padding:20px;align-items:center;justify-content:center}
+.modal-wrap.open{display:flex} .modal{width:min(720px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:18px;padding:20px}
+.modal h2{margin-top:0;color:#02152f} label{display:block;font-weight:800;margin:14px 0 6px}
+input{width:100%;padding:12px;border:1px solid #cbd5df;border-radius:9px}
+.preview{margin-top:12px;padding:12px;background:#f3f7fb;border-radius:12px}
+.preview-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.status{margin-top:14px;font-weight:800}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.grid{grid-template-columns:1fr}.hero{display:block}.create{margin-top:16px;width:100%}.title small{display:none}}
+</style>
+</head>
+<body>
+<header><div class="top">
+<img class="logo" src="ravofficial.png" alt="RAV">
+<div class="title"><strong data-es="ADMINISTRADOR DE GALERÍA RAV" data-en="RAV GALLERY ADMIN">ADMINISTRADOR DE GALERÍA RAV</strong><small data-es="Ríos de Agua Viva" data-en="Ríos de Agua Viva">Ríos de Agua Viva</small></div>
+<div class="lang"><button id="esBtn" onclick="setLang('es')">ES</button><button id="enBtn" onclick="setLang('en')">EN</button></div>
+</div></header>
+<main>
+<section class="hero">
+<div><h1 data-es="Álbumes de fotografías" data-en="Photo Albums">Álbumes de fotografías</h1>
+<p data-es="Administra álbumes, portadas y fotografías desde un solo lugar." data-en="Manage albums, covers and photos from one place.">Administra álbumes, portadas y fotografías desde un solo lugar.</p></div>
+<button class="create" onclick="openCreate()" data-es="＋ CREAR NUEVO ÁLBUM" data-en="＋ CREATE NEW ALBUM">＋ CREAR NUEVO ÁLBUM</button>
+</section>
+<div class="notice" data-es="VERSIÓN VISUAL: puedes probar los botones. Todavía no sube ni elimina archivos reales." data-en="VISUAL VERSION: you can test the buttons. It does not upload or delete real files yet.">VERSIÓN VISUAL: puedes probar los botones. Todavía no sube ni elimina archivos reales.</div>
+<div class="grid"><article class="album-card">
+      <img src="eventos/25-aniversario-pastoral/portada.png" alt="25° Aniversario Pastoral">
+      <div class="album-body">
+        <h3>25° Aniversario Pastoral</h3><p>Edificando un Legado</p><small>10 fotografías</small>
+        <div class="actions">
+          <button class="primary" onclick="demoOpen('25° Aniversario Pastoral')" data-es="📂 ABRIR" data-en="📂 OPEN">📂 ABRIR</button>
+          <button onclick="demoEdit('25° Aniversario Pastoral')" data-es="✏️ MODIFICAR" data-en="✏️ EDIT">✏️ MODIFICAR</button>
+          <button class="danger" onclick="demoDeleteAlbum('25° Aniversario Pastoral')" data-es="🗑️ ELIMINAR" data-en="🗑️ DELETE">🗑️ ELIMINAR</button>
+        </div>
+      </div>
+    </article>
+<article class="album-card">
+      <img src="eventos/servicios/portada.jpg" alt="Servicios">
+      <div class="album-body">
+        <h3>Servicios</h3><p>Momentos de nuestros servicios</p><small>16 fotografías</small>
+        <div class="actions">
+          <button class="primary" onclick="demoOpen('Servicios')" data-es="📂 ABRIR" data-en="📂 OPEN">📂 ABRIR</button>
+          <button onclick="demoEdit('Servicios')" data-es="✏️ MODIFICAR" data-en="✏️ EDIT">✏️ MODIFICAR</button>
+          <button class="danger" onclick="demoDeleteAlbum('Servicios')" data-es="🗑️ ELIMINAR" data-en="🗑️ DELETE">🗑️ ELIMINAR</button>
+        </div>
+      </div>
+    </article>
+<article class="album-card">
+      <img src="eventos/bautismos/portada.jpg" alt="Bautismos">
+      <div class="album-body">
+        <h3>Bautismos</h3><p>Vidas transformadas en el nombre de Jesucristo</p><small>69 fotografías</small>
+        <div class="actions">
+          <button class="primary" onclick="demoOpen('Bautismos')" data-es="📂 ABRIR" data-en="📂 OPEN">📂 ABRIR</button>
+          <button onclick="demoEdit('Bautismos')" data-es="✏️ MODIFICAR" data-en="✏️ EDIT">✏️ MODIFICAR</button>
+          <button class="danger" onclick="demoDeleteAlbum('Bautismos')" data-es="🗑️ ELIMINAR" data-en="🗑️ DELETE">🗑️ ELIMINAR</button>
+        </div>
+      </div>
+    </article>
+<article class="album-card">
+      <img src="eventos/Praise team/portada.png" alt="Praise Team">
+      <div class="album-body">
+        <h3>Praise Team</h3><p>Adorando juntos</p><small>34 fotografías</small>
+        <div class="actions">
+          <button class="primary" onclick="demoOpen('Praise Team')" data-es="📂 ABRIR" data-en="📂 OPEN">📂 ABRIR</button>
+          <button onclick="demoEdit('Praise Team')" data-es="✏️ MODIFICAR" data-en="✏️ EDIT">✏️ MODIFICAR</button>
+          <button class="danger" onclick="demoDeleteAlbum('Praise Team')" data-es="🗑️ ELIMINAR" data-en="🗑️ DELETE">🗑️ ELIMINAR</button>
+        </div>
+      </div>
+    </article>
+<article class="album-card">
+      <img src="eventos/Ministerio Infantil/portada.png" alt="Ministerio Infantil">
+      <div class="album-body">
+        <h3>Ministerio Infantil</h3><p>Formando una nueva generación</p><small>23 fotografías</small>
+        <div class="actions">
+          <button class="primary" onclick="demoOpen('Ministerio Infantil')" data-es="📂 ABRIR" data-en="📂 OPEN">📂 ABRIR</button>
+          <button onclick="demoEdit('Ministerio Infantil')" data-es="✏️ MODIFICAR" data-en="✏️ EDIT">✏️ MODIFICAR</button>
+          <button class="danger" onclick="demoDeleteAlbum('Ministerio Infantil')" data-es="🗑️ ELIMINAR" data-en="🗑️ DELETE">🗑️ ELIMINAR</button>
+        </div>
+      </div>
+    </article>
+<article class="album-card">
+      <img src="eventos/escuela-biblica-de-vacaciones-vbs/portada.png" alt="Escuela Bíblica de Vacaciones (VBS)">
+      <div class="album-body">
+        <h3>Escuela Bíblica de Vacaciones (VBS)</h3><p>Aprendiendo y creciendo en Jesús</p><small>Fotografías</small>
+        <div class="actions">
+          <button class="primary" onclick="demoOpen('Escuela Bíblica de Vacaciones (VBS)')" data-es="📂 ABRIR" data-en="📂 OPEN">📂 ABRIR</button>
+          <button onclick="demoEdit('Escuela Bíblica de Vacaciones (VBS)')" data-es="✏️ MODIFICAR" data-en="✏️ EDIT">✏️ MODIFICAR</button>
+          <button class="danger" onclick="demoDeleteAlbum('Escuela Bíblica de Vacaciones (VBS)')" data-es="🗑️ ELIMINAR" data-en="🗑️ DELETE">🗑️ ELIMINAR</button>
+        </div>
+      </div>
+    </article>
+<article class="album-card">
+      <img src="eventos/que-significan-estas-piedras/portada.jpg" alt="¿Qué significan estas piedras?">
+      <div class="album-body">
+        <h3>¿Qué significan estas piedras?</h3><p>Recordando las obras de Dios</p><small>30 fotografías</small>
+        <div class="actions">
+          <button class="primary" onclick="demoOpen('¿Qué significan estas piedras?')" data-es="📂 ABRIR" data-en="📂 OPEN">📂 ABRIR</button>
+          <button onclick="demoEdit('¿Qué significan estas piedras?')" data-es="✏️ MODIFICAR" data-en="✏️ EDIT">✏️ MODIFICAR</button>
+          <button class="danger" onclick="demoDeleteAlbum('¿Qué significan estas piedras?')" data-es="🗑️ ELIMINAR" data-en="🗑️ DELETE">🗑️ ELIMINAR</button>
+        </div>
+      </div>
+    </article>
+<article class="album-card">
+      <img src="eventos/Ministerio Hadassa/portada.jpg" alt="Ministerio Hadassa">
+      <div class="album-body">
+        <h3>Ministerio Hadassa</h3><p>Mujeres que adoran, sirven e impactan</p><small>28 fotografías</small>
+        <div class="actions">
+          <button class="primary" onclick="demoOpen('Ministerio Hadassa')" data-es="📂 ABRIR" data-en="📂 OPEN">📂 ABRIR</button>
+          <button onclick="demoEdit('Ministerio Hadassa')" data-es="✏️ MODIFICAR" data-en="✏️ EDIT">✏️ MODIFICAR</button>
+          <button class="danger" onclick="demoDeleteAlbum('Ministerio Hadassa')" data-es="🗑️ ELIMINAR" data-en="🗑️ DELETE">🗑️ ELIMINAR</button>
+        </div>
+      </div>
+    </article></div>
+</main>
+
+<div class="modal-wrap" id="modalWrap"><div class="modal">
+<h2 id="modalTitle"></h2>
+<div id="modalContent"></div>
+<div class="preview-actions">
+<button class="primary" onclick="demoSave()" data-es="💾 GUARDAR CAMBIOS" data-en="💾 SAVE CHANGES">💾 GUARDAR CAMBIOS</button>
+<button onclick="closeModal()" data-es="❌ CANCELAR" data-en="❌ CANCEL">❌ CANCELAR</button>
+</div>
+<div class="status" id="status"></div>
+</div></div>
+
+<script>
+let lang=localStorage.getItem("ravGalleryAdminLanguage")||"es";
+function setLang(v){
+ lang=v; localStorage.setItem("ravGalleryAdminLanguage",v); document.documentElement.lang=v;
+ document.querySelectorAll("[data-es]").forEach(el=>el.textContent=el.dataset[v]);
+ esBtn.classList.toggle("active",v==="es"); enBtn.classList.toggle("active",v==="en");
+}
+function showModal(title,content){
+ modalTitle.textContent=title; modalContent.innerHTML=content; status.textContent=""; modalWrap.classList.add("open");
+}
+function closeModal(){modalWrap.classList.remove("open")}
+function openCreate(){
+ showModal(lang==="es"?"Crear nuevo álbum":"Create new album",`
+ <label>${lang==="es"?"Nombre del álbum":"Album name"}</label><input placeholder="${lang==="es"?"Ej. Conferencia 2026":"Ex. Conference 2026"}">
+ <label>${lang==="es"?"Portada":"Cover"}</label><input type="file" accept="image/*">
+ <label>${lang==="es"?"Fotografías":"Photos"}</label><input type="file" accept="image/*,video/mp4" multiple>
+ <div class="preview">${lang==="es"?"Aquí aparecerá la vista previa. Cada foto tendrá un botón 🗑️ Quitar antes de subir.":"Preview will appear here. Each photo will have a 🗑️ Remove button before upload."}</div>`);
+}
+function demoOpen(name){
+ showModal(name,`<p>${lang==="es"?"Aquí aparecerán todas las fotos publicadas de este álbum.":"All published photos in this album will appear here."}</p>
+ <button class="primary">${lang==="es"?"＋ AGREGAR FOTOS":"＋ ADD PHOTOS"}</button>
+ <div class="preview">${lang==="es"?"Cada fotografía publicada tendrá: 🗑️ Eliminar. Antes de eliminar pediremos confirmación.":"Each published photo will have: 🗑️ Delete. Confirmation will be required."}</div>`);
+}
+function demoEdit(name){
+ showModal((lang==="es"?"Modificar: ":"Edit: ")+name,`
+ <label>${lang==="es"?"Nombre del álbum":"Album name"}</label><input value="${name.replace(/"/g,'&quot;')}">
+ <label>${lang==="es"?"Cambiar portada":"Change cover"}</label><input type="file" accept="image/*">
+ <div class="preview">${lang==="es"?"Puedes cancelar sin guardar los cambios.":"You can cancel without saving changes."}</div>`);
+}
+function demoDeleteAlbum(name){
+ if(confirm((lang==="es"?'¿Eliminar el álbum “':'Delete album “')+name+'”?')) alert(lang==="es"?"DEMOSTRACIÓN: no se eliminó nada.":"DEMO: nothing was deleted.");
+}
+function demoSave(){status.textContent=lang==="es"?"✓ Demostración guardada. Todavía no modifica GitHub.":"✓ Demo saved. GitHub is not modified yet."}
+modalWrap.addEventListener("click",e=>{if(e.target===modalWrap)closeModal()});
+setLang(lang);
+</script>
+</body></html>
